@@ -1,0 +1,37 @@
+.backgroundContainer {
+  width: 100%;
+  height: 100vh; /* Fallback for browsers that do not support Custom Properties */
+  height: calc(var(--vh, 1vh) * 100);
+  position: fixed;
+  user-select: none;
+
+  .container {
+    width: 100%;
+    height: 100%;
+    //overflow: hidden;
+    display: flex;
+    flex-direction: column;
+
+    @media only screen and (min-width: 480px) {
+      max-width: 480px;
+      margin: 0 auto;
+    }
+  }
+
+  .pageContainer {
+    flex: 1 0 50%;
+    position: relative;
+
+    .pageWrapper {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      will-change: transform;
+    }
+  }
+
+  .ctaButton {
+    display: block;
+    margin: 0 20px 50px;
+  }
+}

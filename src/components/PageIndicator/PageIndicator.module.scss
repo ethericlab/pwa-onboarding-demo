@@ -1,0 +1,48 @@
+.pageIndicator {
+  margin-left: auto;
+  margin-right: auto;
+
+  position: relative;
+  width: 5px; // for 1 page
+  display: flex;
+  justify-content: space-between;
+
+  .item {
+    display: inline-block;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: #613CEA;
+  }
+
+  // needed for CSS modules to correct detect class names
+
+  .activeItem {
+    position: absolute;
+    display: inline-flex;
+    height: 5px;
+    /* animation: moving-dot 1s ease-in-out; */
+
+    .left {
+      border-top-left-radius: 5px;
+      border-bottom-left-radius: 5px;
+    }
+    .center {
+      display: inline-block;
+      background: orange;
+      width: calc(100% - 5px);
+      height: 5px;
+    }
+    .right {
+      border-top-right-radius: 5px;
+      border-bottom-right-radius: 5px;
+    }
+
+    .left, .right {
+      display: inline-block;
+      width: 2.5px;
+      height: 5px;
+      background: orange;
+    }
+  }
+}

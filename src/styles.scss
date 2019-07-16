@@ -1,0 +1,34 @@
+*,
+*::after,
+*::before {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  overscroll-behavior: none;
+}
+
+// TODO: remove
+@keyframes moving-dot {
+  0% {
+    left: 0;
+    width: 10px;
+  }
+
+  50% {
+    left: 0;
+    width: calc(50% + 5px);
+  }
+
+  100% {
+    left: calc(50% - 4px);
+    width: 10px;
+  }
+}
+

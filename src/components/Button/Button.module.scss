@@ -1,0 +1,17 @@
+.button {
+  background: #613CEA;
+  color: #fff;
+  border: none; // Safari fix
+  border-radius: 12px;
+  padding: 20px;
+
+  font-family: 'Work Sans', sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 19px;
+  text-align: center;
+
+  &:hover {
+    background: darken(#613CEA, 20%);
+  }
+}
