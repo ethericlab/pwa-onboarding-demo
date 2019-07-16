@@ -1,9 +1,8 @@
 import React from "react";
 import s from "./Page.module.scss";
 
-export const Page = ({ color, style, children }) => (
+export const Page = ({ color /* Used by parent component */, style, children }) => (
   <article className={s.page} style={style}>
-    {React.Children.map(children, child => {})}
     {children}
   </article>
 );

@@ -8,11 +8,13 @@ import { Spacer } from "../Spacer";
 import { Button } from "../Button/Button";
 
 const MIN_VELOCITY = 0.2;
-const MIN_SCREEN_PROGRESS = 0.3
+const MIN_SCREEN_PROGRESS = 0.3;
+const MAX_OVERSCROLL = 0.3;
 
 export const PageView = ({ children }) => {
   const pages = React.Children.toArray(children);
 
+  // Init some hooks
   const [{ progress }, setProgress] = useSpring(() => ({
     progress: 0
   }));
@@ -26,15 +28,18 @@ export const PageView = ({ children }) => {
     setProgress({
       progress: page
     });
-    setPage(i => {
-      if (i < currentPage - 1 || i > currentPage + 1)
+    setPage(pageIndex => {
+      // If the page is outside the currentPage +- 1 range - hide it altogether, since it won't be visible anyway
+      if (pageIndex < currentPage - 1 || pageIndex > currentPage + 1)
         return { display: "none" };
-      const x = (i - page) * window.innerWidth;
-      console.log(`page ${i} -> ${x}\n`);
+
+      // Compute the x offset of the page at current pageIndex
+      const x = (pageIndex - page) * window.innerWidth;
       return { x, display: "block" };
     });
   };
 
+  // Set up gesture recognition
   const bind = useGesture(
     ({ down, delta: [xDelta], direction: [xDir], vxvy: [xVelocity] }) => {
       const dragEnd = !down;
@@ -49,7 +54,11 @@ export const PageView = ({ children }) => {
       let screenScrollProgress = (clampedXDelta * -1) / window.innerWidth;
 
       // Do not go to next page if the drag length was too small or velocity too low
-      if (dragEnd && Math.abs(screenScrollProgress) < MIN_SCREEN_PROGRESS && Math.abs(xVelocity) < MIN_VELOCITY) {
+      if (
+        dragEnd &&
+        Math.abs(screenScrollProgress) < MIN_SCREEN_PROGRESS &&
+        Math.abs(xVelocity) < MIN_VELOCITY
+      ) {
         screenScrollProgress = 0;
       }
 
@@ -60,12 +69,11 @@ export const PageView = ({ children }) => {
         pages.length - 1
       );
 
-      // console.log(`newProgress: ${newProgress}, xDelta: ${clampedXDelta}`)
-
       // On drag end - calculate the new page
       if (dragEnd) {
         // If we scrolled to fast on a mobile device - add 0.5 to be sure to transition to next page
-        if (Math.abs(xVelocity) > MIN_VELOCITY) newProgress += 0.5 * (xDir > 0 ? -1 : 1);
+        if (Math.abs(xVelocity) > MIN_VELOCITY)
+          newProgress += 0.5 * (xDir > 0 ? -1 : 1);
 
         const newPage = clamp(Math.round(newProgress), 0, pages.length - 1);
         setCurrentPage(newPage);
@@ -73,22 +81,32 @@ export const PageView = ({ children }) => {
         setProgress({
           progress: newProgress
         });
-        setPage(i => {
+        setPage(pageIndex => {
           // If the page is outside the currentPage +- 1 range - hide it altogether, since it won't be visible anyway
-          if (i < currentPage - 1 || i > currentPage + 1)
+          if (pageIndex < currentPage - 1 || pageIndex > currentPage + 1)
             return { display: "none" };
 
-          // Compute x delta for first and last pages so that they overscroll to only 1/3 (0.3) of the window width
+          // Compute x delta for first and last pages so that they overscroll to only <MAX_OVERSCROLL> of the window width
           let xDelta = clampedXDelta;
-          if (currentPage === 0 && i === currentPage && xDir > 0 && screenScrollProgress < 0) {
-            xDelta = clamp(xDelta, 0, 0.3 * window.innerWidth);
-          } else if (currentPage === pages.length - 1 && i === currentPage && xDir < 0 && screenScrollProgress > 0) {
-            xDelta = clamp(xDelta, -0.3 * window.innerWidth, 0);
+          // First page overscrolls to the left
+          if (
+            currentPage === 0 &&
+            pageIndex === currentPage &&
+            screenScrollProgress < 0 // screen is progressing to the left
+          ) {
+            xDelta = clamp(xDelta, 0, MAX_OVERSCROLL * window.innerWidth);
+          }
+          // Last page overscrolls to the right
+          else if (
+            currentPage === pages.length - 1 &&
+            pageIndex === currentPage &&
+            screenScrollProgress > 0 // screen is progressing to the right
+          ) {
+            xDelta = clamp(xDelta, -MAX_OVERSCROLL * window.innerWidth, 0);
           }
 
-          // Compute the x offset of the page at index `i`]
-          let x =
-            (i - currentPage) * window.innerWidth + xDelta;
+          // Compute intermediate x offset of the page at current pageIndex
+          let x = (pageIndex - currentPage) * window.innerWidth + xDelta;
 
           return { x, display: "block" };
         });
@@ -96,14 +114,16 @@ export const PageView = ({ children }) => {
     }
   );
 
+  const backgroundColorsInterpolator = progress.interpolate({
+    range: range(0, pages.length),
+    output: pages.map(_ => _.props.color || "#fff")
+  });
+
   return (
     <animated.div
       className={s.backgroundContainer}
       style={{
-        background: progress.interpolate({
-          range: range(0, pages.length - 1, true),
-          output: pages.map(_ => _.props.color || "#fff")
-        })
+        background: backgroundColorsInterpolator
       }}
       {...bind()}
     >

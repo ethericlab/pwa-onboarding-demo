@@ -7,7 +7,7 @@ import explore from "./explore.png";
 import make from "./make.png";
 import share from "./share.png";
 import "./styles.scss";
-import {Spacer} from './components/Spacer'
+import { Spacer } from "./components/Spacer";
 
 // In mobile browsers 100vh can include browser UI elements, which we want to avoid for a good UX.
 // The following code re-computes 1vh for mobile browsers, excluding browser UI.
@@ -17,9 +17,9 @@ document.documentElement.style.setProperty("--vh", `${vh}px`);
 const App = () => {
   return (
     <PageView>
-      <Page>
+      <Page color="hsla(0,0%,100%,1.0)">
         <Image src={explore} alt={"Explore"} />
-        <Spacer/>
+        <Spacer />
         <Title>Explore</Title>
         <Text>
           Explore limitless variations of your digital representation.
@@ -28,7 +28,7 @@ const App = () => {
 
       <Page color="hsla(162,13%,50%,0.3)">
         <Image src={make} alt={"Make"} />
-        <Spacer/>
+        <Spacer />
         <Title>Make</Title>
         <Text>
           Create an emoji and stickers which describe your personality.
@@ -37,7 +37,7 @@ const App = () => {
 
       <Page color="hsla(211,12%,44%,0.3)">
         <Image src={share} alt={"Share"} />
-        <Spacer/>
+        <Spacer />
         <Title>Share</Title>
         <Text>Share it in your favorite social networks or in iMessage.</Text>
       </Page>
@@ -48,20 +48,20 @@ const App = () => {
 const rootElement = document.getElementById("root");
 ReactDOM.render(<App />, rootElement);
 
-// if ("serviceWorker" in navigator) {
-//   window.addEventListener("load", function() {
-//     navigator.serviceWorker.register("/sw.js").then(
-//       function(registration) {
-//         // Registration was successful
-//         console.log(
-//           "ServiceWorker registration successful with scope: ",
-//           registration.scope
-//         );
-//       },
-//       function(err) {
-//         // registration failed :(
-//         console.log("ServiceWorker registration failed: ", err);
-//       }
-//     );
-//   });
-// }
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", function() {
+    navigator.serviceWorker.register("/sw.js").then(
+      registration => {
+        // Registration was successful
+        console.log(
+          "ServiceWorker registration successful with scope: ",
+          registration.scope
+        );
+      },
+      err => {
+        // registration failed
+        console.log("ServiceWorker registration failed: ", err);
+      }
+    );
+  });
+}
