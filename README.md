@@ -1,4 +1,4 @@
-# Flutter 3D flip sample app
+# PWA native-like on-boarding demo
 
 **Mobile Chrome**:
 
@@ -14,23 +14,20 @@
 
 **Desktop Chrome**:
 
-<img src="https://user-images.githubusercontent.com/2844046/61447645-035ba800-a95a-11e9-9d5d-d588d6580a9b.gif" height="800" />
+<img src="https://user-images.githubusercontent.com/2844046/61447645-035ba800-a95a-11e9-9d5d-d588d6580a9b.gif" height="400" />
 
 <br/>
 
 This sample app demonstrates how to create a native-like on-boarding experience in a Progressive Web App.
 It is written in [React](https://reactjs.org/) and uses [react-spring](https://www.react-spring.io/) for spring animations 
-and [react-use-gesture](https://github.com/react-spring/react-use-gesture) for gesture detection
-
-This demo shows how to use [PageView](https://api.flutter.dev/flutter/widgets/PageView-class.html) 
-and [Transform](https://api.flutter.dev/flutter/widgets/Transform-class.html) widgets to make a 3D 
-rotation effect when flipping pages.
+and [react-use-gesture](https://github.com/react-spring/react-use-gesture) for gesture detection.
 
 ## Running the demo
 
-- [Install Flutter](https://flutter.dev/docs/get-started/install)
-- Open [Android Studio](https://developer.android.com/studio) or [VS Code](https://code.visualstudio.com/)
-- Build and run the app on an emulator or a real device
+- Install [Node.js](https://nodejs.org/en/)
+- Execute `npm install` in the project's directory
+- Execute `npm run start` to start this demo
+- Go to `localhost:3000` in the browser
 
 ## Authors
 
@@ -42,4 +39,4 @@ rotation effect when flipping pages.
 
 ## License
 
-3D Flip is available under the MIT license. See the LICENSE file for more info.
+PWA on-boarding is available under the MIT license. See the LICENSE file for more info.
