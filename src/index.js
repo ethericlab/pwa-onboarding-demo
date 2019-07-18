@@ -17,7 +17,7 @@ document.documentElement.style.setProperty("--vh", `${vh}px`);
 const App = () => {
   return (
     <PageView>
-      <Page color="hsla(0,0%,100%,1.0)">
+      <Page color="hsla(208, 65%, 27%, 0.1)">
         <Image src={explore} alt={"Explore"} />
         <Spacer />
         <Title>Explore</Title>
@@ -26,7 +26,7 @@ const App = () => {
         </Text>
       </Page>
 
-      <Page color="hsla(162,13%,50%,0.3)">
+      <Page color="hsla(360, 71%, 64%, 0.1)">
         <Image src={make} alt={"Make"} />
         <Spacer />
         <Title>Make</Title>
@@ -35,7 +35,7 @@ const App = () => {
         </Text>
       </Page>
 
-      <Page color="hsla(211,12%,44%,0.3)">
+      <Page color="hsla(162, 48%, 40%, 0.1)">
         <Image src={share} alt={"Share"} />
         <Spacer />
         <Title>Share</Title>
