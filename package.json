@@ -11,7 +11,7 @@
     "react-use-gesture": "5.1.2"
   },
   "devDependencies": {
-    "node-sass": "^4.12.0",
+    "node-sass": "^7.0.0",
     "react-scripts": "3.0.1",
     "typescript": "3.3.3"
   },
